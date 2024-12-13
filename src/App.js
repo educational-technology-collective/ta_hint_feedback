@@ -4,6 +4,11 @@ import './App.css';
 import notebookData from './data/mockNotebook.json';
 import lorenzData from './data/Lorenz.json';
 
+import Markdown from 'marked-react';
+import Lowlight from 'react-lowlight';
+import python from 'highlight.js/lib/languages/python';
+Lowlight.registerLanguage('py', python);
+
 function App() {
   const [hintRequest, setHintRequest] = useState({
     request_id: 1,
@@ -19,17 +24,19 @@ function App() {
 
   const renderNotebook = () => {
 
-    let nb = lorenzData.cells.map((cell) => {
+    let nb = lorenzData.cells.map((cell, i) => {
       if (cell.cell_type === "markdown") {
         return (
-          <div className="notebook-cell">
-            <p>{cell.source}</p>
+          <div key={i} className="notebook-cell">
+            <Markdown>{cell.source}</Markdown>
           </div>
         );
       } else if (cell.cell_type === "code") {
+        let val = typeof cell.source === 'string' ? cell.source : ''
         return (
-          <div className="notebook-cell">
-            <pre>{cell.source}</pre>
+          <div key={i} className="notebook-cell">
+            <Lowlight language="py" value={val}>
+            </Lowlight>
           </div>
         );
       }
