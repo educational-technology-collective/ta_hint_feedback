@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import notebookData from './data/mockNotebook.json';
+import lorenzData from './data/Lorenz.json';
 
 function App() {
   const [hintRequest, setHintRequest] = useState({
@@ -16,21 +17,31 @@ function App() {
   const [taFeedback, setTaFeedback] = useState('');
   const [notebookContent, setNotebookContent] = useState("");
 
-  useEffect(() => {
-    // Load notebook content from the mock JSON data
-    const formattedNotebook = notebookData.cells
-      .map(cell => {
-        if (cell.cell_type === "markdown") {
-          return cell.source.join('\n');
-        } else if (cell.cell_type === "code") {
-          return `\n\`\`\`python\n${cell.source.join('')}\n\`\`\`\n`;
-        }
-        return '';
-      })
-      .join('\n');
+  const renderNotebook = () => {
 
-    setNotebookContent(formattedNotebook);
-  }, []);
+    let nb = lorenzData.cells.map((cell) => {
+      if (cell.cell_type === "markdown") {
+        return (
+          <div className="notebook-cell">
+            <p>{cell.source}</p>
+          </div>
+        );
+      } else if (cell.cell_type === "code") {
+        return (
+          <div className="notebook-cell">
+            <pre>{cell.source}</pre>
+          </div>
+        );
+      }
+    });
+    return (
+      <pre>
+        {nb}
+      </pre>
+    )
+  }
+
+
 
   // Mock function to simulate fetching a new request
   const fetchRequest = () => {
@@ -51,6 +62,7 @@ function App() {
     setTaFeedback('');
     fetchRequest();
   };
+  
 
   return (
     <div className="app">
@@ -60,7 +72,7 @@ function App() {
       <main className="main-content">
         <div className="notebook-view">
           <h2>Student Notebook</h2>
-          <pre>{notebookContent}</pre>
+          {renderNotebook()}
         </div>
         <div className="hint-area">
           {hintRequest ? (
