@@ -9,6 +9,8 @@ import Lowlight from 'react-lowlight';
 import python from 'highlight.js/lib/languages/python';
 Lowlight.registerLanguage('py', python);
 
+import { getOneHF } from './utils/requests';
+
 function App() {
   const [hintRequest, setHintRequest] = useState({
     request_id: 1,
@@ -69,6 +71,8 @@ function App() {
     setTaFeedback('');
     fetchRequest();
   };
+
+  console.log("HF DATA: ", getOneHF(1));
   
 
   return (
