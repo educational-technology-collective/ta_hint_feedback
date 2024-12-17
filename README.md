@@ -3,12 +3,12 @@
 This document provides step-by-step instructions for setting up, testing, and debugging the **TA Feedback Interface** application.
 
 ## Table of Contents  
-1. Project Overview  
-2. Development Environment Setup  
-3. Running the Application  
-4. Testing API Requests  
-5. CORS Debugging Notes for Django API  
-6. Troubleshooting  
+1. [Project Overview](#project-overview)
+2. [Development Environment Setup](#development-environment-setup)
+3. [Running the Application](#running-the-application)
+4. [Testing API Requests](#testing-api-requests)
+5. [CORS Debugging Notes for Django API](#cors-debugging-notes-for-django-api)
+6. [Troubleshooting](#troubleshooting)
 
 
 ## Project Overview
