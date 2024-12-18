@@ -25,8 +25,9 @@ function App() {
   const [notebookContent, setNotebookContent] = useState("");
 
   const renderNotebook = () => {
-
-    let nb = lorenzData.cells.map((cell, i) => {
+    if (typeof notebookContent === 'string') return <p>Loading...</p>
+    let nb = notebookContent.cells.map((cell, i) => {
+      if (typeof cell.source === 'object') cell.source = cell.source.join('')
       if (cell.cell_type === "markdown") {
         return (
           <div key={i} className="notebook-cell">
@@ -72,8 +73,15 @@ function App() {
     fetchRequest();
   };
 
-  console.log("HF DATA: ", getOneHF(1));
-  
+  useEffect(() => {
+    let body;
+    getOneHF(1).then((data) => {
+      body = JSON.parse(data.body);
+      console.log("HF DATA: ", body);
+      setHintRequest(body);
+      setNotebookContent(JSON.parse(body.student_notebook));
+    });
+  }, []);
 
   return (
     <div className="app">
