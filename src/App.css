@@ -100,6 +100,12 @@ body {
 Visual Studio-like style based on original C# coloring by Jason Diamond <jason@diamond.name>
 
 */
+
+.lowlight {
+  background-color: white;
+  width: fit-content;
+  padding: 0.5rem;
+}
 .hljs {
   background: rgb(255, 253, 249);
   color: black;

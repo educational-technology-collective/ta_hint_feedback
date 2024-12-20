@@ -11,6 +11,9 @@ Lowlight.registerLanguage('py', python);
 
 import { getOneHF } from './utils/requests';
 
+const taIdLS = window.localStorage.getItem('taId') || null;
+
+
 function App() {
   const [hintRequest, setHintRequest] = useState({
     request_id: 1,
@@ -23,6 +26,7 @@ function App() {
   });
   const [taFeedback, setTaFeedback] = useState('');
   const [notebookContent, setNotebookContent] = useState("");
+  const [taId, setTaId] = useState(taIdLS);
 
   const renderNotebook = () => {
     if (typeof notebookContent === 'string') return <p>Loading...</p>
@@ -49,6 +53,13 @@ function App() {
         {nb}
       </pre>
     )
+  }
+
+  const handleTaIdSubmit = (e) => {
+    console.log("TA ID: ", e.target[0].value);
+    e.preventDefault();
+    setTaId(e.target[0].value);
+    window.localStorage.setItem('taId', e.target[0].value);
   }
 
 
@@ -83,10 +94,37 @@ function App() {
     });
   }, []);
 
+  // if no ta id, prompt for it and dont render anything else
+  if (!taId) {
+    return (
+      <div className="app">
+        <header>
+          <h1>TA Feedback Interface</h1>
+        </header>
+        <main className="main-content">
+          <div className="ta-id-prompt">
+            <h2>Enter your TA ID:</h2>
+            <form 
+                onSubmit={handleTaIdSubmit}
+                >
+
+              <input
+                type="text"
+                placeholder="TA ID"
+              />
+              <button>Submit</button>
+            </form>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className="app">
       <header>
         <h1>TA Feedback Interface</h1>
+
       </header>
       <main className="main-content">
         <div className="notebook-view">
