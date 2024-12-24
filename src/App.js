@@ -9,7 +9,7 @@ import Lowlight from 'react-lowlight';
 import python from 'highlight.js/lib/languages/python';
 Lowlight.registerLanguage('py', python);
 
-import { getOneHF } from './utils/requests';
+import { getOneHF, getAllHF, submitFeedback } from './utils/requests';
 
 const taIdLS = window.localStorage.getItem('taId') || null;
 
@@ -64,31 +64,41 @@ function App() {
 
 
 
-  // Mock function to simulate fetching a new request
-  const fetchRequest = () => {
-    setHintRequest({
-      request_id: 2,
-      question_id: "Q54321",
-      hint_type: "Specific",
-      reflection_question: "How did you approach the problem?",
-      reflection_answer: "I tried to use a loop but got stuck.",
-      AI_hint: "Consider using recursion instead of a loop.",
-      student_notes: "Need help understanding recursion better."
+
+  // Mock function to simulate submitting feedback
+  const handleSubmitFeedback = () => {
+    // alert(`Feedback submitted: ${taFeedback}`);
+    setTaFeedback('');
+    submitFeedback(taFeedback, taId, hintRequest.request_id).then((data) => {
+      console.log("Feedback submitted: ", data);
     });
   };
 
-  // Mock function to simulate submitting feedback
-  const submitFeedback = () => {
-    alert(`Feedback submitted: ${taFeedback}`);
-    setTaFeedback('');
-    fetchRequest();
-  };
+  const getFirstNonLockedRequest = (data) => {
+    for (let i = 0; i < data.length; i++) {
+      if (!data[i].request_dispatched) {
+        return data[i];
+      }
+    }
+    return null;
+  }
 
   useEffect(() => {
+    async function fetchData() {
+      const data = await getAllHF();
+      const body = JSON.parse(data.body);
+      console.log("ALL DATA: ", body);
+
+      const firstNonLockedRequest = getFirstNonLockedRequest(body);
+
+    }
+    fetchData();
     let body;
+
+
     getOneHF(1).then((data) => {
       body = JSON.parse(data.body);
-      console.log("HF DATA: ", body);
+      console.log("HF DATA: ", body, data);
       setHintRequest(body);
       setNotebookContent(JSON.parse(body.student_notebook));
     });
@@ -147,7 +157,7 @@ function App() {
                 onChange={(e) => setTaFeedback(e.target.value)}
                 placeholder="Write a hint below..."
               ></textarea>
-              <button onClick={submitFeedback}>Submit Hint</button>
+              <button onClick={handleSubmitFeedback}>Submit Hint</button>
             </div>
           ) : (
             <p>No pending requests. Please check back later.</p>
@@ -155,7 +165,7 @@ function App() {
         </div>
       </main>
       <footer>
-        <button onClick={fetchRequest}>Next</button>
+        <button onClick={() => {}}>Next</button>
       </footer>
     </div>
   );
