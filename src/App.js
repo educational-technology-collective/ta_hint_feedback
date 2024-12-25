@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import notebookData from './data/mockNotebook.json';
-import lorenzData from './data/Lorenz.json';
 
 import Markdown from 'marked-react';
 import Lowlight from 'react-lowlight';
