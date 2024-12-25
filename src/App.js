@@ -14,15 +14,7 @@ const taIdLS = window.localStorage.getItem('taId') || null;
 
 
 function App() {
-  const [hintRequest, setHintRequest] = useState({
-    request_id: 1,
-    question_id: "Q12345",
-    hint_type: "General",
-    reflection_question: "What challenges did you face?",
-    reflection_answer: "I struggled to understand recursion.",
-    AI_hint: "Think about breaking the problem into smaller parts.",
-    student_notes: "Please provide examples of recursion.",
-  });
+  const [hintRequest, setHintRequest] = useState(null);
   const [taFeedback, setTaFeedback] = useState('');
   const [notebookContent, setNotebookContent] = useState("");
   const [taId, setTaId] = useState(taIdLS);
@@ -124,6 +116,19 @@ function App() {
               <button>Submit</button>
             </form>
           </div>
+        </main>
+      </div>
+    );
+  }
+
+  if (!hintRequest) {
+    return (
+      <div className="app">
+        <header>
+          <h1>TA Feedback Interface</h1>
+        </header>
+        <main className="main-content">
+          <p>No Pending Hints. Check again later</p>
         </main>
       </div>
     );
