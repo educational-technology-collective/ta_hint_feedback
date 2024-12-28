@@ -121,19 +121,6 @@ function App() {
     );
   }
 
-  if (!hintRequest) {
-    return (
-      <div className="app">
-        <header>
-          <h1>TA Feedback Interface</h1>
-        </header>
-        <main className="main-content">
-          <p>No Pending Hints. Check again later</p>
-        </main>
-      </div>
-    );
-  }
-
   return (
     <div className="app">
       <header>
