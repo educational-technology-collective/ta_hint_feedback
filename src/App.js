@@ -101,6 +101,7 @@ function App() {
       <div className="app">
         <header>
           <h1>TA Feedback Interface</h1>
+          
         </header>
         <main className="main-content">
           <div className="ta-id-prompt">
@@ -125,7 +126,13 @@ function App() {
     <div className="app">
       <header>
         <h1>TA Feedback Interface</h1>
-
+        <div>
+            <form onSubmit={handleTaIdSubmit}>
+              <label>TA ID:</label>
+              <input type="text" placeholder="Enter uniqname" value={ taIdLS ? taIdLS : "Enter Uniq ID"} />
+              <button style={{display: 'none'}}></button>
+            </form>
+          </div>
       </header>
       <main className="main-content">
         <div className="notebook-view">
