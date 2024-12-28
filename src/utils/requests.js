@@ -24,7 +24,7 @@ const requestBodySubmit = (feedback, taId, reqId) => (
         "method": "POST",
         "port": "9004",
         "path": "feedback_generation/ta_interface/",
-        "params": {
+        "body": {
             "request_id": reqId,
             "action": "save",
             "TA_feedback": feedback,
