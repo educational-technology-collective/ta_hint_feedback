@@ -21,7 +21,7 @@ body {
 
 header, footer {
     background-color: var(--header-footer-color);
-    color: var(--form-text-color);
+    color: var(--accent-color);
 }
 
 button {
@@ -39,7 +39,7 @@ input, textarea {
     border: 1px solid var(--border-color);
     padding: 8px;
     border-radius: 4px;
-    width: 100%;
+    margin-left: 1rem;
 }
 
 hr {
