@@ -52,7 +52,7 @@ body, button, input, textarea, header, footer {
 }
 
 header {
-    height: 80px;
+    height: 5rem;
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
@@ -60,7 +60,7 @@ header {
 }
 
 footer {
-    height: 50px;
+    height: 3rem;
 }
 
 h1 {
@@ -99,7 +99,7 @@ main {
     border: 1px solid #ddd;
     border-radius: 4px;
     overflow-y: auto;
-    max-height: 500px;
+    max-height: calc(100dvh - 10rem);
 }
 
 .hint-area {
