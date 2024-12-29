@@ -163,7 +163,6 @@ function App() {
         </div>
       </main>
       <footer>
-        <button onClick={() => {}}>Next</button>
       </footer>
     </div>
   );
