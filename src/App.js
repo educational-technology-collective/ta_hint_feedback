@@ -74,6 +74,7 @@ function App() {
       setHintRequest(null);
       return;
     }
+    console.log("BODY AFTER IF: ", body);
     setHintRequest(body);
     setNotebookContent(JSON.parse(body.student_notebook));
 
