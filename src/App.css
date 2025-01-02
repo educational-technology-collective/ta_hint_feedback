@@ -1,14 +1,11 @@
-
-
-
-
-
-  /*
+/*
 
 Visual Studio-like style based on original C# coloring by Jason Diamond <jason@diamond.name>
 
 */
 
+/* These are the notebook rendering 
+   styles directly from the highlight library */
 .lowlight {
   background-color: white;
   width: fit-content;
