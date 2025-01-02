@@ -114,6 +114,11 @@ main {
     margin: 0.5rem 0;
 }
 
+.hint-request-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
 textarea {
     width: 100%;
     height: 100px;
@@ -127,7 +132,6 @@ textarea {
 
 button {
     padding: 0.5rem 1rem;
-    color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
