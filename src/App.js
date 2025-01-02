@@ -61,7 +61,6 @@ function App() {
     // alert(`Feedback submitted: ${taFeedback}`);
     setTaFeedback('');
     await submitFeedback(taFeedback, taId, hintRequest.request_id);
-    await getOne();
   };
 
   const getOne = async () => {
@@ -183,6 +182,7 @@ function App() {
                 }}
               ></textarea>
               <button onClick={handleSubmitFeedback}>Submit Hint</button>
+              <button onClick={getOne}>Next Request</button>
             </div>
           ) : (
             <p>No pending requests. Please check back later.</p>
