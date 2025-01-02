@@ -181,8 +181,10 @@ function App() {
                   }
                 }}
               ></textarea>
-              <button onClick={handleSubmitFeedback}>Submit Hint</button>
-              <button onClick={getOne}>Next Request</button>
+              <div className="hint-request-buttons">
+                <button onClick={handleSubmitFeedback}>Submit Hint</button>
+                <button onClick={getOne} >Next Request</button>
+              </div>
             </div>
           ) : (
             <p>No pending requests. Please check back later.</p>
