@@ -55,7 +55,7 @@ To start the development server:
 npm start
 ```
 
-The app will open in your default browser at http://localhost:8080.
+The app will open in your default browser at http://localhost:3000.
 
 ## Testing API Requests  
 
