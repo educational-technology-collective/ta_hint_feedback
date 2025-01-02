@@ -57,21 +57,21 @@ function App() {
 
 
   // Mock function to simulate submitting feedback
-  const handleSubmitFeedback = () => {
+  const handleSubmitFeedback = async () => {
     // alert(`Feedback submitted: ${taFeedback}`);
     setTaFeedback('');
-    submitFeedback(taFeedback, taId, hintRequest.request_id).then((data) => {
-      console.log("Feedback submitted: ", data);
-    });
+    await submitFeedback(taFeedback, taId, hintRequest.request_id);
+    await getOne();
   };
 
-  const getFirstNonLockedRequest = (data) => {
-    for (let i = 0; i < data.length; i++) {
-      if (!data[i].request_dispatched) {
-        return data[i];
-      }
-    }
-    return null;
+  const getOne = async () => {
+    // getOneHF(1).t
+    const data = await getOneHF();
+    const body = JSON.parse(data.body);
+    console.log("HF DATA: ", body, data);
+    setHintRequest(body);
+    setNotebookContent(JSON.parse(body.student_notebook));
+
   }
 
   useEffect(() => {
@@ -80,19 +80,10 @@ function App() {
       const body = JSON.parse(data.body);
       console.log("ALL DATA: ", body);
 
-      const firstNonLockedRequest = getFirstNonLockedRequest(body);
-
     }
     fetchData();
-    let body;
-
-
-    getOneHF(1).then((data) => {
-      body = JSON.parse(data.body);
-      console.log("HF DATA: ", body, data);
-      setHintRequest(body);
-      setNotebookContent(JSON.parse(body.student_notebook));
-    });
+    
+    getOne();
   }, []);
 
   // if no ta id, prompt for it and dont render anything else
@@ -129,7 +120,7 @@ function App() {
         <div>
             <form onSubmit={handleTaIdSubmit}>
               <label>TA ID:</label>
-              <input type="text" placeholder="Enter uniqname" value={ taIdLS ? taIdLS : "Enter Uniq ID"} />
+              <input type="text" placeholder="Enter uniqname" value={ taId ? taId : "Enter Uniq ID"} />
               <button style={{display: 'none'}}></button>
             </form>
           </div>
@@ -154,6 +145,12 @@ function App() {
                 value={taFeedback}
                 onChange={(e) => setTaFeedback(e.target.value)}
                 placeholder="Write a hint below..."
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault(); // Prevents a new line in the textarea
+                    handleSubmitFeedback();
+                  }
+                }}
               ></textarea>
               <button onClick={handleSubmitFeedback}>Submit Hint</button>
             </div>
