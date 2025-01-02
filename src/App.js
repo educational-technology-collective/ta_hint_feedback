@@ -68,7 +68,12 @@ function App() {
     // getOneHF(1).t
     const data = await getOneHF();
     const body = JSON.parse(data.body);
-    console.log("HF DATA: ", body, data);
+    console.log("HF DATA: ", body, data, data.nrows);
+    
+    if (body.nrows === 0) {
+      setHintRequest(null);
+      return;
+    }
     setHintRequest(body);
     setNotebookContent(JSON.parse(body.student_notebook));
 
@@ -109,6 +114,30 @@ function App() {
             </form>
           </div>
         </main>
+      </div>
+    );
+  }
+
+  if (!hintRequest) {
+    return (
+      <div className="app">
+        <header>
+          <h1>TA Feedback Interface</h1>
+          <div>
+            <form onSubmit={handleTaIdSubmit}>
+              <label>TA ID:</label>
+              <input type="text" placeholder="Enter uniqname" value={ taId ? taId : "Enter Uniq ID"} />
+              <button style={{display: 'none'}}></button>
+            </form>
+          </div>
+        </header>
+        <main className="main-content">
+          <div className="hint-area">
+            <p>No pending requests. Please check back later.</p>
+          </div>
+        </main>
+        <footer>
+        </footer>
       </div>
     );
   }
