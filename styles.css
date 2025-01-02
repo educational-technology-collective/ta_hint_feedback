@@ -1,0 +1,144 @@
+:root {
+    --background-color: #FFFFFF; /* Pure White */
+    --header-footer-color: #00274C; /* U-M Blue */
+    --accent-color: #FFCB05; /* U-M Maize */
+    --form-field-background: #F4F4F4; /* Light Gray */
+    --form-text-color: #333333; /* Dark Gray */
+    --border-color: #D1D5DB; /* Muted Gray */
+}
+
+::before, ::after, * {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--form-text-color);
+}
+
+header, footer {
+    background-color: var(--header-footer-color);
+    color: var(--accent-color);
+}
+
+button {
+    background-color: var(--accent-color);
+    color: var(--header-footer-color);
+    border: 2px solid var(--border-color);
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input, textarea {
+    background-color: var(--form-field-background);
+    color: var(--form-text-color);
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    border-radius: 4px;
+    margin-left: 1rem;
+}
+
+hr {
+    border-color: var(--border-color);
+}
+
+/* Transition for Theme Switching */
+body, button, input, textarea, header, footer {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+    height: 5rem;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer {
+    height: 3rem;
+}
+
+h1 {
+    margin: 0;
+}
+
+p {
+    text-wrap: wrap;
+}
+
+pre {
+    width: fit-content;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+    height: 100dvh;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+main {
+
+    display: flex;
+    padding: 2rem;
+    height: 100dvh;
+}
+
+.notebook-view {
+    flex: 2;
+    margin-right: 2rem;
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow-y: auto;
+    max-height: calc(100dvh - 10rem);
+}
+
+.hint-area {
+    flex: 1;
+}
+
+.hint-request {
+    margin-bottom: 2rem;
+}
+
+.hint-request p {
+    margin: 0.5rem 0;
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin: 1rem 0;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    resize: none;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+
+button {
+    margin-top: 1rem;
+}
