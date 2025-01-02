@@ -18,6 +18,8 @@ function App() {
   const [taFeedback, setTaFeedback] = useState('');
   const [notebookContent, setNotebookContent] = useState("");
   const [taId, setTaId] = useState(taIdLS);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [allRequests, setAllRequests] = useState([]);
 
   const renderNotebook = () => {
     if (typeof notebookContent === 'string') return <p>Loading...</p>
@@ -61,6 +63,7 @@ function App() {
     // alert(`Feedback submitted: ${taFeedback}`);
     setTaFeedback('');
     await submitFeedback(taFeedback, taId, hintRequest.request_id);
+    setFeedbackSubmitted(true);
   };
 
   const getOne = async () => {
@@ -84,6 +87,7 @@ function App() {
       const data = await getAllHF();
       const body = JSON.parse(data.body);
       console.log("ALL DATA: ", body);
+      setAllRequests(body);
 
     }
     fetchData();
@@ -182,8 +186,9 @@ function App() {
                 }}
               ></textarea>
               <div className="hint-request-buttons">
-                <button onClick={handleSubmitFeedback}>Submit Hint</button>
-                <button onClick={getOne} >Next Request</button>
+                {feedbackSubmitted ? <button onClick={getOne} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
+                
+                
               </div>
             </div>
           ) : (
