@@ -8,7 +8,7 @@ import Lowlight from 'react-lowlight';
 import python from 'highlight.js/lib/languages/python';
 Lowlight.registerLanguage('py', python);
 
-import { getOneHF, getAllHF, submitFeedback } from './utils/requests';
+import { getOneHF, getAllHF, submitFeedback, downloadNotebook } from './utils/requests';
 
 const taIdLS = window.localStorage.getItem('taId') || null;
 
@@ -49,25 +49,24 @@ function App() {
   }
 
   const handleTaIdSubmit = (e) => {
-    console.log("TA ID: ", e.target[0].value);
+    console.log("TA ID: ", e);
     e.preventDefault();
     setTaId(e.target[0].value);
     window.localStorage.setItem('taId', e.target[0].value);
   }
 
+  const hideStyle = feedbackSubmitted ? {opacity: '50%', }: {};
 
 
 
   // Mock function to simulate submitting feedback
   const handleSubmitFeedback = async () => {
-    // alert(`Feedback submitted: ${taFeedback}`);
     setTaFeedback('');
     await submitFeedback(taFeedback, taId, hintRequest.request_id);
     setFeedbackSubmitted(true);
   };
 
   const getOne = async () => {
-    // getOneHF(1).t
     const data = await getOneHF();
     const body = JSON.parse(data.body);
     console.log("HF DATA: ", body, data, data.nrows);
@@ -76,9 +75,9 @@ function App() {
       setHintRequest(null);
       return;
     }
-    console.log("BODY AFTER IF: ", body);
     setHintRequest(body);
     setNotebookContent(JSON.parse(body.student_notebook));
+    setFeedbackSubmitted(false);
 
   }
 
@@ -95,6 +94,7 @@ function App() {
     getOne();
   }, []);
 
+    console.log("NOTEBOOK CONTENT: ", notebookContent);
   // if no ta id, prompt for it and dont render anything else
   if (!taId) {
     return (
@@ -106,15 +106,16 @@ function App() {
         <main className="main-content">
           <div className="ta-id-prompt">
             <h2>Enter your TA ID:</h2>
-            <form 
-                onSubmit={handleTaIdSubmit}
+            <form onSubmit={handleTaIdSubmit} 
                 >
 
               <input
                 type="text"
                 placeholder="TA ID"
+                
               />
-              <button>Submit</button>
+
+              <button >Submit</button>
             </form>
           </div>
         </main>
@@ -158,7 +159,7 @@ function App() {
             </form>
           </div>
       </header>
-      <main className="main-content">
+      <main className="main-content" style={hideStyle}>
         <div className="notebook-view">
           <h2>Student Notebook</h2>
           {renderNotebook()}
@@ -166,13 +167,15 @@ function App() {
         <div className="hint-area">
           {hintRequest ? (
             <div className="hint-request">
-              <h2>Request {hintRequest.request_id}</h2>
-              <p><strong>Question:</strong> {hintRequest.question_id}</p>
-              <p><strong>Hint Type:</strong> {hintRequest.hint_type}</p>
-              <p><strong>Reflection Question:</strong> {hintRequest.reflection_question}</p>
-              <p><strong>Student Reflection Answer:</strong> {hintRequest.reflection_answer}</p>
-              <p><strong>AI Hint:</strong> {hintRequest.AI_hint}</p>
-              <p><strong>Student Notes:</strong> {hintRequest.student_notes}</p>
+              <div >
+                <h2>Request {hintRequest.request_id}</h2>
+                <p><strong>Question:</strong> {hintRequest.question_id ? hintRequest.question_id : "N/A"}</p>
+                <p><strong>Hint Type:</strong> {hintRequest.hint_type ? hintRequest.hint_type : "N/A"}</p>
+                <p><strong>Reflection Question:</strong> {hintRequest.reflection_question ? hintRequest.reflection_question : "N/A"}</p>
+                <p><strong>Student Reflection Answer:</strong> {hintRequest.reflection_answer ? hintRequest.reflection_answer : "N/A"}</p>
+                <p><strong>AI Hint:</strong> {hintRequest.AI_hint ? hintRequest.AI_hint : "N/A"}</p>
+                <p><strong>Student Notes:</strong> {hintRequest.student_notes ? hintRequest.student_notes : "N/A"}</p>
+              </div>
 
               <textarea
                 value={taFeedback}
@@ -186,8 +189,8 @@ function App() {
                 }}
               ></textarea>
               <div className="hint-request-buttons">
-                {feedbackSubmitted ? <button onClick={getOne} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
-                
+                {feedbackSubmitted ? <button style={{opacity: '100%'}} className='next-button' onClick={getOne} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
+                <button onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}>Download Notebook</button>
                 
               </div>
             </div>

@@ -75,3 +75,29 @@ export const submitFeedback = async (feedback, taId, reqId) => {
     const data = await response.json()
     return data
 }
+
+
+export function downloadNotebook(jsonData, filename = "notebook.ipynb") {
+    // Convert JSON object to string
+    const jsonString = JSON.stringify(jsonData, null, 2);
+    
+    // Create a blob object from the JSON string
+    const blob = new Blob([jsonString], { type: "application/json" });
+    
+    // Create a URL for the blob
+    const url = URL.createObjectURL(blob);
+    
+    // Create an anchor element to trigger the download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    
+    // Programmatically click the anchor to trigger the download
+    a.click();
+    
+    // Cleanup: Remove the anchor and revoke the URL
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+}
