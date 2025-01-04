@@ -159,15 +159,18 @@ function App() {
             </form>
           </div>
       </header>
-      <main className="main-content" style={hideStyle}>
-        <div className="notebook-view">
+      <main className="main-content" >
+        <div className="notebook-view" style={hideStyle}>
           <h2>Student Notebook</h2>
           {renderNotebook()}
         </div>
         <div className="hint-area">
           {hintRequest ? (
             <div className="hint-request">
-              <div >
+              <div 
+                style={hideStyle}
+                disabled={feedbackSubmitted}
+              >
                 <h2>Request {hintRequest.request_id}</h2>
                 <p><strong>Question:</strong> {hintRequest.question_id ? hintRequest.question_id : "N/A"}</p>
                 <p><strong>Hint Type:</strong> {hintRequest.hint_type ? hintRequest.hint_type : "N/A"}</p>
@@ -178,6 +181,8 @@ function App() {
               </div>
 
               <textarea
+                style={hideStyle}
+                disabled={feedbackSubmitted}
                 value={taFeedback}
                 onChange={(e) => setTaFeedback(e.target.value)}
                 placeholder="Write a hint below..."
@@ -189,8 +194,11 @@ function App() {
                 }}
               ></textarea>
               <div className="hint-request-buttons">
-                {feedbackSubmitted ? <button style={{opacity: '100%'}} className='next-button' onClick={getOne} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
-                <button onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}>Download Notebook</button>
+                {feedbackSubmitted ? <button className='next-button' onClick={getOne} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
+                <button 
+                onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}
+                disabled={feedbackSubmitted}
+                >Download Notebook</button>
                 
               </div>
             </div>
