@@ -63,7 +63,6 @@ export const getAllHF = async () => {
 
 export const submitFeedback = async (feedback, taId, reqId) => {
     // reqId = reqId.toString();
-    console.log("Submitting feedback: ", feedback, taId, reqId);
     const response = await fetch(HOST_URL, {
         method: 'POST',
         mode: 'cors',
