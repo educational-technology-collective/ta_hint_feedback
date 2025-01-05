@@ -83,6 +83,7 @@ main {
 }
 
 .notebook-view {
+    position: relative;
     flex: 2;
     margin-right: 2rem;
     padding: 1rem;
