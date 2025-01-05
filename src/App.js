@@ -66,8 +66,9 @@ function App() {
     setFeedbackSubmitted(true);
   };
 
-  const getOne = async () => {
-    const data = await getOneHF();
+  const getOne = async (id) => {
+    const data = await getOneHF(id);
+    console.log("HF DATA: ", data);
     const body = JSON.parse(data.body);
     console.log("HF DATA: ", body, data, data.nrows);
     
@@ -78,20 +79,19 @@ function App() {
     setHintRequest(body);
     setNotebookContent(JSON.parse(body.student_notebook));
     setFeedbackSubmitted(false);
-
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getAllHF();
-      const body = JSON.parse(data.body);
-      console.log("ALL DATA: ", body);
-      setAllRequests(body);
+    // async function fetchData() {
+    //   const data = await getAllHF();
+    //   const body = JSON.parse(data.body);
+    //   console.log("ALL DATA: ", body);
+    //   setAllRequests(body);
 
-    }
-    fetchData();
+    // }
+    // fetchData();
     
-    getOne();
+    if (taId) getOne(taId);
   }, []);
 
     console.log("NOTEBOOK CONTENT: ", notebookContent);
@@ -161,7 +161,6 @@ function App() {
       </header>
       <main className="main-content" >
         <div className="notebook-view" style={hideStyle}>
-          <h2>Student Notebook</h2>
           {renderNotebook()}
         </div>
         <div className="hint-area">
@@ -194,7 +193,7 @@ function App() {
                 }}
               ></textarea>
               <div className="hint-request-buttons">
-                {feedbackSubmitted ? <button className='next-button' onClick={getOne} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
+                {feedbackSubmitted ? <button className='next-button' onClick={() => getOne(taId)} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
                 <button 
                 onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}
                 disabled={feedbackSubmitted}

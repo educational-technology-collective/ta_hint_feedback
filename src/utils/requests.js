@@ -1,13 +1,13 @@
 import { HOST_URL } from "./config"
-const requestBody = {
+const requestBody = (id) => ({
     "method": "GET",
     "port": "9004",
     "path": "feedback_generation/ta_interface/",
     "params": {
         "action": "fetch_one",
-        "TA_id": "luang"
+        "TA_id": id
     }
-}
+})
 
 const requestBodyAll = {
     "method": "GET",
@@ -35,14 +35,14 @@ const requestBodySubmit = (feedback, taId, reqId) => (
 )
 
 
-export const getOneHF = async () => {
+export const getOneHF = async (id) => {
     const response = await fetch(HOST_URL, {
         method: 'POST',
         mode: 'cors',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(requestBody)
+        body: JSON.stringify(requestBody(id))
     })
     const data = await response.json()
     return data
