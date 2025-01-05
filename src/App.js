@@ -68,9 +68,9 @@ function App() {
 
   const getOne = async (id) => {
     const data = await getOneHF(id);
-    console.log("HF DATA: ", data);
+    // console.log("HF DATA: ", data);
     const body = JSON.parse(data.body);
-    console.log("HF DATA: ", body, data, data.nrows);
+    // console.log("HF DATA: ", body, data, data.nrows);
     
     if (body.nrows === 0) {
       setHintRequest(null);
@@ -94,7 +94,7 @@ function App() {
     if (taId) getOne(taId);
   }, []);
 
-    console.log("NOTEBOOK CONTENT: ", notebookContent);
+    // console.log("NOTEBOOK CONTENT: ", notebookContent);
   // if no ta id, prompt for it and dont render anything else
   if (!taId) {
     return (
@@ -161,6 +161,13 @@ function App() {
       </header>
       <main className="main-content" >
         <div className="notebook-view" style={hideStyle}>
+          <button 
+              onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}
+              disabled={feedbackSubmitted}
+              style={{position: "absolute", top: "0", right: "1rem", display: "flex", alignItems: "center",backgroundColor: "blue", color: "white", padding: "0.25rem .5rem", borderRadius: "5px", border: "none", cursor: "pointer"}}
+              >
+                <span style={{fontSize: "1.2rem"}} >⭳</span> Download
+              </button>
           {renderNotebook()}
         </div>
         <div className="hint-area">
@@ -194,10 +201,7 @@ function App() {
               ></textarea>
               <div className="hint-request-buttons">
                 {feedbackSubmitted ? <button className='next-button' onClick={() => getOne(taId)} >Next Request</button> : <button onClick={handleSubmitFeedback}>Submit Hint</button>}
-                <button 
-                onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}
-                disabled={feedbackSubmitted}
-                >Download Notebook</button>
+                
                 
               </div>
             </div>
