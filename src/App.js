@@ -82,14 +82,14 @@ function App() {
   }
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getAllHF();
-      const body = JSON.parse(data.body);
-      console.log("ALL DATA: ", body);
-      setAllRequests(body);
+    // async function fetchData() {
+    //   const data = await getAllHF();
+    //   const body = JSON.parse(data.body);
+    //   console.log("ALL DATA: ", body);
+    //   setAllRequests(body);
 
-    }
-    fetchData();
+    // }
+    // fetchData();
     
     if (taId) getOne(taId);
   }, [taId]);
