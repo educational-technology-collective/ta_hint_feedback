@@ -36,6 +36,7 @@ const requestBodySubmit = (feedback, taId, reqId) => (
 
 
 export const getOneHF = async (id) => {
+    console.log("ID: ", id);
     const response = await fetch(HOST_URL, {
         method: 'POST',
         mode: 'cors',
