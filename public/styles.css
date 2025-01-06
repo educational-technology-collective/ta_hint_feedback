@@ -69,7 +69,6 @@ pre {
 .app {
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
     height: 100dvh;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -92,6 +91,10 @@ main {
     border-radius: 4px;
     overflow-y: auto;
     max-height: calc(100dvh - 10rem);
+}
+
+.notebook-cell :not(.lowlight)  {
+    max-width: 800px;
 }
 
 .hint-area {
