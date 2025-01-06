@@ -93,6 +93,12 @@ main {
     max-height: calc(100dvh - 10rem);
 }
 
+.notebook-header {
+    display: flex;
+    margin-bottom: 1rem;
+    max-height: 3rem;
+}
+
 .notebook-cell :not(.lowlight)  {
     max-width: 800px;
 }

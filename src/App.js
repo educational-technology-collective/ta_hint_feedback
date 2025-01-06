@@ -161,13 +161,15 @@ function App() {
       </header>
       <main className="main-content" >
         <div className="notebook-view" style={hideStyle}>
-          <button 
+          <div className="notebook-header">
+            <h2>Student Notebook</h2>
+            <button 
               onClick={() => downloadNotebook(notebookContent, `${hintRequest.request_id}_SIADS505_TA_feedback.ipynb`)}
               disabled={feedbackSubmitted}
-              style={{position: "absolute", top: "0", right: "1rem", display: "flex", alignItems: "center",backgroundColor: "blue", color: "white", padding: "0.25rem .5rem", borderRadius: "5px", border: "none", cursor: "pointer"}}
               >
                 <span style={{fontSize: "1.2rem"}} >⭳</span> Download
-              </button>
+            </button>
+          </div>
           {renderNotebook()}
         </div>
         <div className="hint-area">
